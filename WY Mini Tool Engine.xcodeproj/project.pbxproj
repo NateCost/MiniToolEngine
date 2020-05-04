@@ -3,13 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		F478C69A246071F7002C881D /* WY_Mini_Tool_Engine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F478C690246071F6002C881D /* WY_Mini_Tool_Engine.framework */; };
 		F478C6AB2460737C002C881D /* FlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F478C6AA2460737C002C881D /* FlowTests.swift */; };
 		F478C6AD2460927B002C881D /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F478C6AC2460927B002C881D /* Flow.swift */; };
+		F478C6B024609FED002C881D /* SwiftLintFramework in Frameworks */ = {isa = PBXBuildFile; productRef = F478C6AF24609FED002C881D /* SwiftLintFramework */; };
+		F478C6B42460A2B1002C881D /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = F478C6B32460A2B1002C881D /* SwiftFormat */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F478C6B024609FED002C881D /* SwiftLintFramework in Frameworks */,
+				F478C6B42460A2B1002C881D /* SwiftFormat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,12 +111,18 @@
 				F478C68C246071F6002C881D /* Sources */,
 				F478C68D246071F6002C881D /* Frameworks */,
 				F478C68E246071F6002C881D /* Resources */,
+				F478C6B12460A001002C881D /* SwiftLint */,
+				F478C6B62460A2CB002C881D /* SwiftFormat */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "WY Mini Tool Engine";
+			packageProductDependencies = (
+				F478C6AF24609FED002C881D /* SwiftLintFramework */,
+				F478C6B32460A2B1002C881D /* SwiftFormat */,
+			);
 			productName = "WY Mini Tool Engine";
 			productReference = F478C690246071F6002C881D /* WY_Mini_Tool_Engine.framework */;
 			productType = "com.apple.product-type.framework";
@@ -164,6 +174,10 @@
 				Base,
 			);
 			mainGroup = F478C686246071F6002C881D;
+			packageReferences = (
+				F478C6AE24609FED002C881D /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				F478C6B22460A2B1002C881D /* XCRemoteSwiftPackageReference "SwiftFormat" */,
+			);
 			productRefGroup = F478C691246071F6002C881D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -190,6 +204,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F478C6B12460A001002C881D /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		F478C6B62460A2CB002C881D /* SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftFormat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftformat >/dev/null; then\n  swiftformat --lint --lenient --verbose .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F478C68C246071F6002C881D /* Sources */ = {
@@ -461,6 +514,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F478C6AE24609FED002C881D /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.39.2;
+			};
+		};
+		F478C6B22460A2B1002C881D /* XCRemoteSwiftPackageReference "SwiftFormat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nicklockwood/SwiftFormat";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.44.8;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F478C6AF24609FED002C881D /* SwiftLintFramework */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F478C6AE24609FED002C881D /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = SwiftLintFramework;
+		};
+		F478C6B32460A2B1002C881D /* SwiftFormat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F478C6B22460A2B1002C881D /* XCRemoteSwiftPackageReference "SwiftFormat" */;
+			productName = SwiftFormat;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F478C687246071F6002C881D /* Project object */;
 }

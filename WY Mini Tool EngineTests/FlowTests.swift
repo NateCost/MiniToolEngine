@@ -11,7 +11,6 @@ import XCTest
 @testable import WY_Mini_Tool_Engine
 
 class FlowTests: XCTestCase {
-  
   func test_start_withNoSegments_doesNotRouteToSegment() {
     let router = RouterSpy()
     let sut = Flow(segments: [], router: router)
@@ -72,7 +71,7 @@ class FlowTests: XCTestCase {
   class RouterSpy: Router {
     var passedSegmentsCount = 0
     var routedSegmentCount = 0
-    var routedSegment: Segment? = nil
+    var routedSegment: Segment?
     
     func handleSegment(_ segment: Segment) {
       routedSegmentCount += 1

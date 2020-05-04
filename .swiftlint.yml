@@ -1,0 +1,86 @@
+disabled_rules: # rule identifiers to exclude from running
+    - trailing_newline
+    - opening_brace
+    - empty_count
+    - comma
+    - colon
+    - trailing_semicolon
+    - nesting
+    - conditional_binding_cascade
+    - operator_whitespace
+    - control_statement
+    - legacy_constant
+    - return_arrow_whitespace
+    - trailing_whitespace
+    - closing_brace
+    - statement_position
+    - legacy_constructor
+    - valid_docs
+    - missing_docs
+    - leading_whitespace
+    - function_parameter_count
+    - large_tuple
+    - vertical_parameter_alignment
+    - multiple_closures_with_trailing_closure
+    - mark
+    - switch_case_alignment
+    - fallthrough
+    - identifier_name
+    - vertical_whitespace_closing_braces
+    - vertical_whitespace_opening_braces
+    - unused_import
+    - toggle_bool
+    - strict_fileprivate
+    - multiline_parameters
+    - closure_end_indentation
+    - contains_over_filter_count
+    - implicit_getter
+    - valid_ibinspectable
+
+opt_in_rules: # some rules are only opt-in
+  - first_where
+  - empty_string
+  - modifier_order
+  - toggle_bool
+  - unused_private_declaration
+  - convenience_type
+  - cyclomatic_complexity
+  - todo
+
+included: # paths to include during linting. `--path` is ignored if present.
+  - WY Mini Tool Engine
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - WY Mini Tool Engine/Supporting Files
+
+type_name:
+  min_length: 3 # only warning
+  max_length: # warning and error
+    warning: 40
+    error: 50
+
+force_cast: error # implicitly
+force_try:
+  severity: error
+
+line_length: 110
+
+function_body_length:
+  - 20 #warning
+
+# they can set both implicitly with an array
+type_body_length:
+  - 300 # warning
+  - 400 # error
+# or they can set both explicitly
+file_length:
+  warning: 500
+  error: 1200
+
+identifier_name:
+  min_length: # only min_length
+    error: 3 # only error
+  excluded: # excluded via string array
+    - id
+    - _id
+
+reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, junit, html, emoji)
