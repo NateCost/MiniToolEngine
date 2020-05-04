@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F478C69A246071F7002C881D /* WY_Mini_Tool_Engine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F478C690246071F6002C881D /* WY_Mini_Tool_Engine.framework */; };
-		F478C69F246071F7002C881D /* WY_Mini_Tool_EngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F478C69E246071F7002C881D /* WY_Mini_Tool_EngineTests.swift */; };
-		F478C6A1246071F7002C881D /* WY_Mini_Tool_Engine.h in Headers */ = {isa = PBXBuildFile; fileRef = F478C693246071F6002C881D /* WY_Mini_Tool_Engine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F478C6AB2460737C002C881D /* FlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F478C6AA2460737C002C881D /* FlowTests.swift */; };
+		F478C6AD2460927B002C881D /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F478C6AC2460927B002C881D /* Flow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,11 +24,11 @@
 
 /* Begin PBXFileReference section */
 		F478C690246071F6002C881D /* WY_Mini_Tool_Engine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WY_Mini_Tool_Engine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F478C693246071F6002C881D /* WY_Mini_Tool_Engine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WY_Mini_Tool_Engine.h; sourceTree = "<group>"; };
 		F478C694246071F6002C881D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F478C699246071F7002C881D /* WY Mini Tool EngineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "WY Mini Tool EngineTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F478C69E246071F7002C881D /* WY_Mini_Tool_EngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WY_Mini_Tool_EngineTests.swift; sourceTree = "<group>"; };
 		F478C6A0246071F7002C881D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F478C6AA2460737C002C881D /* FlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTests.swift; sourceTree = "<group>"; };
+		F478C6AC2460927B002C881D /* Flow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +71,8 @@
 		F478C692246071F6002C881D /* WY Mini Tool Engine */ = {
 			isa = PBXGroup;
 			children = (
-				F478C693246071F6002C881D /* WY_Mini_Tool_Engine.h */,
 				F478C694246071F6002C881D /* Info.plist */,
+				F478C6AC2460927B002C881D /* Flow.swift */,
 			);
 			path = "WY Mini Tool Engine";
 			sourceTree = "<group>";
@@ -80,8 +80,8 @@
 		F478C69D246071F7002C881D /* WY Mini Tool EngineTests */ = {
 			isa = PBXGroup;
 			children = (
-				F478C69E246071F7002C881D /* WY_Mini_Tool_EngineTests.swift */,
 				F478C6A0246071F7002C881D /* Info.plist */,
+				F478C6AA2460737C002C881D /* FlowTests.swift */,
 			);
 			path = "WY Mini Tool EngineTests";
 			sourceTree = "<group>";
@@ -93,7 +93,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F478C6A1246071F7002C881D /* WY_Mini_Tool_Engine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,9 +147,11 @@
 				TargetAttributes = {
 					F478C68F246071F6002C881D = {
 						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1140;
 					};
 					F478C698246071F7002C881D = {
 						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1140;
 					};
 				};
 			};
@@ -195,6 +196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F478C6AD2460927B002C881D /* Flow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F478C69F246071F7002C881D /* WY_Mini_Tool_EngineTests.swift in Sources */,
+				F478C6AB2460737C002C881D /* FlowTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +341,7 @@
 		F478C6A5246071F7002C881D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -356,6 +359,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nirma.WY-Mini-Tool-Engine";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -363,6 +367,7 @@
 		F478C6A6246071F7002C881D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -387,6 +392,8 @@
 		F478C6A8246071F7002C881D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = U9A52X52G8;
@@ -398,6 +405,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nirma.WY-Mini-Tool-EngineTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -405,6 +413,8 @@
 		F478C6A9246071F7002C881D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = U9A52X52G8;
