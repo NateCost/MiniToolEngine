@@ -20,37 +20,15 @@ class FlowTests: XCTestCase {
   }
   
   func test_start_withSegments_routeToFirstSegment() {
-    let segments = [
-      SegmentSpy(value: "one"),
-      SegmentSpy(value: "two")
-    ]
-    makeSUT(segments: segments).start()
+    makeSUT(segments: [SegmentSpy(value: "one")]).start()
     
     XCTAssertEqual(router.routedSegment?.value, "one")
   }
   
   func test_start_withSegments_routeToFirstSegment_2() {
-    let segments = [
-      SegmentSpy(value: "two"),
-      SegmentSpy(value: "tree")
-    ]
-    let sut = Flow(segments: segments, router: router)
-    
-    sut.start()
+    makeSUT(segments: [SegmentSpy(value: "two")]).start()
     
     XCTAssertEqual(router.routedSegment?.value, "two")
-  }
-  
-  func test_start_withSegments_hasSegmentsLoaded() {
-    let segments = [
-      SegmentSpy(value: "one"),
-      SegmentSpy(value: "two")
-    ]
-    let sut = makeSUT(segments: segments)
-    
-    sut.start()
-  
-    XCTAssertEqual(sut.segments.count, 2)
   }
   
   func test_start_withSegments_routeToSegment() {
@@ -61,32 +39,6 @@ class FlowTests: XCTestCase {
     makeSUT(segments: segments).start()
     
     XCTAssertEqual(router.routedSegments.count, 1)
-  }
-  
-  func test_startAndGiveRightAnswerToFirst_withSegments_routesToSecond() {
-    let segments = [
-      SegmentSpy(value: "one"),
-      SegmentSpy(value: "two")
-    ]
-    let sut = makeSUT(segments: segments)
-    sut.start()
-    
-    router.answerCallback("one")
-    
-    XCTAssertEqual(router.routedSegment!.value, "two")
-  }
-  
-  func test_startAndGiveWrongAnswerToFirst_withSegments_routesToSecond() {
-    let segments = [
-      SegmentSpy(value: "one"),
-      SegmentSpy(value: "two")
-    ]
-    let sut = makeSUT(segments: segments)
-    sut.start()
-    
-    router.answerCallback("two")
-    
-    XCTAssertEqual(router.routedSegment!.value, "one")
   }
   
   func test_startAndGiveRightAnswerToFirstAndSecond_withSegments_routesToSecondAndThird() {
@@ -101,7 +53,7 @@ class FlowTests: XCTestCase {
     router.answerCallback("one")
     router.answerCallback("two")
     
-    XCTAssertEqual(router.routedSegment!.value, "three")
+    XCTAssertEqual(router.routedSegments.map { $0.value }, ["one", "two", "three"])
   }
   
   func test_startAndGiveRightAnswerToFirstAndWrongForSecond_withSegments_routesToSecond() {
@@ -116,7 +68,7 @@ class FlowTests: XCTestCase {
     router.answerCallback("one")
     router.answerCallback("one")
     
-    XCTAssertEqual(router.routedSegment!.value, "two")
+    XCTAssertEqual(router.routedSegments.map { $0.value }, ["one", "two"])
   }
   
   func test_startTwice_withSegments_routeToFirstSegmentTwice() {
@@ -132,6 +84,15 @@ class FlowTests: XCTestCase {
     XCTAssertEqual(router.routedSegments.map { $0.value }, ["one", "one"])
   }
   
+  func test_startAndGiveRightAnswerToFirst_withOneSegment_doesNotRoute() {
+    let sut = makeSUT(segments: [SegmentSpy(value: "one")])
+    sut.start()
+    
+    router.answerCallback("one")
+    
+    XCTAssertEqual(router.routedSegments.map { $0.value }, ["one"])
+  }
+  
   func makeSUT(segments: [Segment]) -> Flow {
     Flow(segments: segments, router: router)
   }
@@ -141,11 +102,11 @@ class FlowTests: XCTestCase {
     var routedSegmentCount = 0
     var routedSegment: Segment?
     var routedSegments: [Segment] = []
-    var answerCallback: ((String) -> Void) = { _ in }
+    var answerCallback: Router.AnswerCallback = { _ in }
     
     func handleSegment(
       _ segment: Segment,
-      answerCallback: @escaping ((String) -> Void)
+      answerCallback: @escaping Router.AnswerCallback
     ) {
       routedSegment = segment
       routedSegments.append(segment)
