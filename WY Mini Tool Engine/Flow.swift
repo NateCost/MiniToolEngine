@@ -35,19 +35,28 @@ class Flow {
   
   func start() {
     if let firstSegment = segments.first {
-      router.handleSegment(firstSegment) { [weak self] answer in
-        guard let self = self, let routedSegment = self.router.routedSegment else { return }
-
-        if routedSegment.value == answer {
-          if let currentSegmentIndex = self.segments
-            .map({ $0.value })
-            .firstIndex(of: routedSegment.value),
-            self.segments.count > currentSegmentIndex + 1 {
-            let nextSegment = self.segments[currentSegmentIndex + 1]
-            self.router.handleSegment(nextSegment, answerCallback: { _ in })
-          }
-        }
-      }
+      router.handleSegment(firstSegment, answerCallback: handleAnswer)
+    }
+  }
+  
+  func handleAnswer(answer: String) {
+    guard let currentSegment = router.routedSegment else { return }
+    if answerValidation(segment: currentSegment, answer: answer) {
+      routeNext(segment: currentSegment)
+    }
+  }
+  
+  func answerValidation(segment: Segment, answer: String) -> Bool {
+    segment.value == answer
+  }
+  
+  func routeNext(segment: Segment) {
+    if let currentSegmentIndex = self.segments
+      .map({ $0.value })
+      .firstIndex(of: segment.value),
+      self.segments.count > currentSegmentIndex + 1 {
+      let nextSegment = self.segments[currentSegmentIndex + 1]
+      self.router.handleSegment(nextSegment, answerCallback: self.handleAnswer(answer:))
     }
   }
 }
