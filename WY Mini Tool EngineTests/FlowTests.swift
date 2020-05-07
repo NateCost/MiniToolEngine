@@ -17,7 +17,7 @@ class FlowTests: XCTestCase {
     
     sut.start()
     
-    XCTAssertEqual(router.routedSegmentCount, 0)
+    XCTAssertTrue(router.routedSegments.isEmpty)
   }
   
   func test_start_withNoSegments_flowHasNoSegmentsLoaded() {
@@ -40,6 +40,19 @@ class FlowTests: XCTestCase {
     sut.start()
     
     XCTAssertEqual(router.routedSegment?.value, "one")
+  }
+  
+  func test_start_withSegments_routeToFirstSegment_2() {
+    let router = RouterSpy()
+    let segments = [
+      SegmentSpy(value: "two"),
+      SegmentSpy(value: "tree")
+    ]
+    let sut = Flow(segments: segments, router: router)
+    
+    sut.start()
+    
+    XCTAssertEqual(router.routedSegment?.value, "two")
   }
   
   func test_start_withSegments_hasSegmentsLoaded() {
@@ -65,17 +78,65 @@ class FlowTests: XCTestCase {
     
     sut.start()
     
-    XCTAssertEqual(router.routedSegmentCount, 1)
+    XCTAssertEqual(router.routedSegments.count, 1)
+  }
+  
+  func test_startAndGiveRightAnswerToFirst_withSegments_routesToSecond() {
+    let router = RouterSpy()
+    let segments = [
+      SegmentSpy(value: "one"),
+      SegmentSpy(value: "two")
+    ]
+    let sut = Flow(segments: segments, router: router)
+    sut.start()
+    
+    router.answerCallback("one")
+    
+    XCTAssertEqual(router.routedSegment!.value, "two")
+  }
+  
+  func test_startAndGiveWrongAnswerToFirst_withSegments_routesToSecond() {
+    let router = RouterSpy()
+    let segments = [
+      SegmentSpy(value: "one"),
+      SegmentSpy(value: "two")
+    ]
+    let sut = Flow(segments: segments, router: router)
+    sut.start()
+    
+    router.answerCallback("two")
+    
+    XCTAssertEqual(router.routedSegment!.value, "one")
+  }
+  
+  func test_startTwice_withSegments_routeToFirstSegmentTwice() {
+    let router = RouterSpy()
+    let segments = [
+      SegmentSpy(value: "one"),
+      SegmentSpy(value: "two")
+    ]
+    let sut = Flow(segments: segments, router: router)
+    
+    sut.start()
+    sut.start()
+     
+    XCTAssertEqual(router.routedSegments.map { $0.value }, ["one", "one"])
   }
   
   class RouterSpy: Router {
     var passedSegmentsCount = 0
     var routedSegmentCount = 0
     var routedSegment: Segment?
+    var routedSegments: [Segment] = []
+    var answerCallback: ((String) -> Void) = { _ in }
     
-    func handleSegment(_ segment: Segment) {
-      routedSegmentCount += 1
+    func handleSegment(
+      _ segment: Segment,
+      answerCallback: @escaping ((String) -> Void)
+    ) {
       routedSegment = segment
+      routedSegments.append(segment)
+      self.answerCallback = answerCallback
     }
   }
   

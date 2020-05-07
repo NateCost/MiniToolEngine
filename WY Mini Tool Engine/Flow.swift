@@ -17,7 +17,11 @@ struct BreachSegment: Segment {
 }
 
 protocol Router {
-  func handleSegment(_ segment: Segment)
+  var routedSegment: Segment? { get }
+  func handleSegment(
+    _ segment: Segment,
+    answerCallback: @escaping ((String) -> Void)
+  )
 }
 
 class Flow {
@@ -30,7 +34,20 @@ class Flow {
   }
   
   func start() {
-    guard !segments.isEmpty else { return }
-    router.handleSegment(BreachSegment(value: ""))
+    if let firstSegment = segments.first {
+      router.handleSegment(firstSegment) { [weak self] answer in
+        guard let self = self, let routedSegment = self.router.routedSegment else { return }
+
+        if routedSegment.value == answer {
+          if let currentSegmentIndex = self.segments
+            .map({ $0.value })
+            .firstIndex(of: routedSegment.value),
+            self.segments.count > currentSegmentIndex + 1 {
+            let nextSegment = self.segments[currentSegmentIndex + 1]
+            self.router.handleSegment(nextSegment, answerCallback: { _ in })
+          }
+        }
+      }
+    }
   }
 }
