@@ -24,11 +24,14 @@ protocol Router {
     _ segment: Segment,
     answerCallback: @escaping AnswerCallback
   )
+  
+  func routeTo(result: [String: String])
 }
 
 class Flow {
   private let router: Router
   private let segments: [Segment]
+  private var result: [String: String] = [:]
   
   init(segments: [Segment], router: Router) {
     self.segments = segments
@@ -38,13 +41,19 @@ class Flow {
   func start() {
     if let firstSegment = segments.first {
       router.handleSegment(firstSegment, answerCallback: handleAnswer)
+    } else {
+      router.routeTo(result: result)
     }
   }
   
   private func handleAnswer(answer: String) {
     guard let currentSegment = router.routedSegment else { return }
+    result[currentSegment.value] = answer
+    
     if answerValidation(segment: currentSegment, answer: answer) {
       routeNext(from: currentSegment)
+    } else {
+      router.routeTo(result: result)
     }
   }
   
@@ -55,10 +64,16 @@ class Flow {
   private  func routeNext(from segment: Segment) {
     if let currentSegmentIndex = self.segments
       .map({ $0.value })
-      .firstIndex(of: segment.value),
-      self.segments.count > currentSegmentIndex + 1 {
-      let nextSegment = self.segments[currentSegmentIndex + 1]
-      self.router.handleSegment(nextSegment, answerCallback: self.handleAnswer(answer:))
+      .firstIndex(of: segment.value) {
+      if self.segments.count > currentSegmentIndex + 1 {
+        let nextSegment = self.segments[currentSegmentIndex + 1]
+        self.router.handleSegment(
+          nextSegment,
+          answerCallback: self.handleAnswer(answer:)
+        )
+      } else {
+        router.routeTo(result: result)
+      }
     }
   }
 }
