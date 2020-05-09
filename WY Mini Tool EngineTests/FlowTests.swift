@@ -99,6 +99,12 @@ class FlowTests: XCTestCase {
     XCTAssertEqual(router.routedResult, [:])
   }
   
+  func test_start_withOneSegments_doesNotRouteToResult() {
+    makeSUT(segments: [SegmentSpy(value: "one")]).start()
+    
+    XCTAssertNil(router.routedResult)
+  }
+  
   func test_startAndGiveRightAnswer_withOneSegment_routesToResult() {
     makeSUT(segments: [SegmentSpy(value: "one")]).start()
     
@@ -118,6 +124,18 @@ class FlowTests: XCTestCase {
     router.answerCallback("two")
     
     XCTAssertEqual(router.routedResult, ["one": "one", "two": "two"])
+  }
+  
+  func test_startAndGiveOneRightAnswer_withTwoSegments_doesNotRouteToResult() {
+    let segments = [
+      SegmentSpy(value: "one"),
+      SegmentSpy(value: "two")
+    ]
+    makeSUT(segments: segments).start()
+    
+    router.answerCallback("one")
+    
+    XCTAssertNil(router.routedResult)
   }
   
   func test_startAndGiveWrongAnswer_withSegment_routesToResult() {

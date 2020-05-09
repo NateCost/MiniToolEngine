@@ -18,13 +18,11 @@ struct BreachSegment: Segment {
 
 protocol Router {
   typealias AnswerCallback = (String) -> Void
-  
   var routedSegment: Segment? { get }
   func handleSegment(
     _ segment: Segment,
     answerCallback: @escaping AnswerCallback
   )
-  
   func routeTo(result: [String: String])
 }
 
@@ -61,19 +59,20 @@ class Flow {
     segment.value == answer
   }
   
-  private  func routeNext(from segment: Segment) {
+  private func routeNext(from segment: Segment) {
     if let currentSegmentIndex = self.segments
       .map({ $0.value })
       .firstIndex(of: segment.value) {
-      if self.segments.count > currentSegmentIndex + 1 {
-        let nextSegment = self.segments[currentSegmentIndex + 1]
+      let nextSegmentIndex = currentSegmentIndex + 1
+      if self.segments.count > nextSegmentIndex {
+        let nextSegment = self.segments[nextSegmentIndex]
         self.router.handleSegment(
           nextSegment,
           answerCallback: self.handleAnswer(answer:)
         )
       } else {
         router.routeTo(result: result)
-      }
+      }      
     }
   }
 }
