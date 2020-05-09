@@ -57,8 +57,8 @@
 		F478C686246071F6002C881D = {
 			isa = PBXGroup;
 			children = (
-				F478C692246071F6002C881D /* WY Mini Tool Engine */,
-				F478C69D246071F7002C881D /* WY Mini Tool EngineTests */,
+				F4C8FB3F2466CC56006A20F3 /* Tests */,
+				F4C8FB3C2466CB88006A20F3 /* Sources */,
 				F478C691246071F6002C881D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,22 +72,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F478C692246071F6002C881D /* WY Mini Tool Engine */ = {
+		F4C8FB3C2466CB88006A20F3 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				F478C694246071F6002C881D /* Info.plist */,
 				F478C6AC2460927B002C881D /* Flow.swift */,
 			);
-			path = "WY Mini Tool Engine";
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		F478C69D246071F7002C881D /* WY Mini Tool EngineTests */ = {
+		F4C8FB3F2466CC56006A20F3 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				F478C6A0246071F7002C881D /* Info.plist */,
 				F478C6AA2460737C002C881D /* FlowTests.swift */,
 			);
-			path = "WY Mini Tool EngineTests";
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -402,7 +402,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "WY Mini Tool Engine/Info.plist";
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -428,7 +428,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "WY Mini Tool Engine/Info.plist";
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -450,7 +450,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = U9A52X52G8;
-				INFOPLIST_FILE = "WY Mini Tool EngineTests/Info.plist";
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -471,7 +471,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = U9A52X52G8;
-				INFOPLIST_FILE = "WY Mini Tool EngineTests/Info.plist";
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
