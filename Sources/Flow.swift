@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol Segment {
+public protocol Segment {
   var value: String { get }
 }
 
-struct BreachSegment: Segment {
-  let value: String
+public struct BreachSegment: Segment {
+  public let value: String
 }
 
 protocol Router {
@@ -26,7 +26,7 @@ protocol Router {
   func routeTo(result: [String: String])
 }
 
-class Flow {
+public class Flow {
   private let router: Router
   private let segments: [Segment]
   private var result: [String: String] = [:]
@@ -36,7 +36,7 @@ class Flow {
     self.router = router
   }
   
-  func start() {
+  public func start() {
     if let firstSegment = segments.first {
       router.handleSegment(firstSegment, answerCallback: handleAnswer)
     } else {
