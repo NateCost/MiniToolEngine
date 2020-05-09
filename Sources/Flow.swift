@@ -60,15 +60,15 @@ class Flow {
   }
   
   private func routeNext(from segment: Segment) {
-    if let currentSegmentIndex = self.segments
+    if let currentSegmentIndex = segments
       .map({ $0.value })
       .firstIndex(of: segment.value) {
       let nextSegmentIndex = currentSegmentIndex + 1
-      if self.segments.count > nextSegmentIndex {
-        let nextSegment = self.segments[nextSegmentIndex]
-        self.router.handleSegment(
+      if segments.count > nextSegmentIndex {
+        let nextSegment = segments[nextSegmentIndex]
+        router.handleSegment(
           nextSegment,
-          answerCallback: self.handleAnswer(answer:)
+          answerCallback: handleAnswer(answer:)
         )
       } else {
         router.routeTo(result: result)
