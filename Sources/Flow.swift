@@ -8,59 +8,57 @@
 
 import Foundation
 
-protocol Router {
-  typealias AnswerCallback = (String) -> Void
-  var routedSegment: Segment? { get }
-  func handleSegment(
-    _ segment: Segment,
-    answerCallback: @escaping AnswerCallback
-  )
-  func routeTo(result: [String: String])
+public protocol Router {
+  associatedtype Segment: Valuable, Hashable
+  typealias SelectionCallback = (Segment, Segment) -> Void
+  
+  func handleSegment(_ segment: Segment, selectionCallback: @escaping SelectionCallback)
+  func routeTo(result: [Segment: Segment])
 }
 
-public class Flow {
-  private let router: Router
+public class Flow<
+  Segment,
+  R: Router
+> where R.Segment == Segment {
+  private let router: R
   private let segments: [Segment]
-  private var result: [String: String] = [:]
+  private var result: [Segment: Segment] = [:]
   
-  init(segments: [Segment], router: Router) {
+  init(segments: [Segment], router: R) {
     self.segments = segments
     self.router = router
   }
   
   public func start() {
     if let firstSegment = segments.first {
-      router.handleSegment(firstSegment, answerCallback: handleAnswer)
+      router.handleSegment(firstSegment, selectionCallback: handleSelection)
     } else {
       router.routeTo(result: result)
     }
   }
   
-  private func handleAnswer(answer: String) {
-    guard let currentSegment = router.routedSegment else { return }
-    result[currentSegment.value] = answer
+  private func handleSelection(selection: Segment, for segment: Segment) {
+    result[segment] = selection
     
-    if answerValidation(segment: currentSegment, answer: answer) {
-      routeNext(from: currentSegment)
+    if selectionValidation(segment: segment, selection: selection) {
+      routeNext(from: segment)
     } else {
       router.routeTo(result: result)
     }
   }
   
-  private func answerValidation(segment: Segment, answer: String) -> Bool {
-    segment.value == answer
+  private func selectionValidation(segment: Segment, selection: Segment) -> Bool {
+    segment == selection
   }
   
   private func routeNext(from segment: Segment) {
-    if let currentSegmentIndex = segments
-      .map({ $0.value })
-      .firstIndex(of: segment.value) {
+    if let currentSegmentIndex = segments.firstIndex(of: segment) {
       let nextSegmentIndex = currentSegmentIndex + 1
       if segments.count > nextSegmentIndex {
         let nextSegment = segments[nextSegmentIndex]
         router.handleSegment(
           nextSegment,
-          answerCallback: handleAnswer(answer:)
+          selectionCallback: handleSelection
         )
       } else {
         router.routeTo(result: result)

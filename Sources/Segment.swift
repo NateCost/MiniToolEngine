@@ -8,10 +8,10 @@
 
 import Foundation
 
-public protocol Segment {
+public protocol Valuable {
   var value: String { get }
 }
 
-public struct BreachSegment: Segment {
+public struct BreachSegment: Valuable {
   public let value: String
 }
