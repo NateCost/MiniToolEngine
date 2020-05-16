@@ -9,17 +9,14 @@
 import Foundation
 
 public protocol Router {
-  associatedtype Segment: Valuable, Hashable
+  associatedtype Segment: Hashable
   typealias SelectionCallback = (Segment, Segment) -> Void
   
   func handleSegment(_ segment: Segment, selectionCallback: @escaping SelectionCallback)
   func routeTo(result: [Segment: Segment])
 }
 
-public class Flow<
-  Segment,
-  R: Router
-> where R.Segment == Segment {
+public class Flow<Segment, R: Router> where R.Segment == Segment {
   private let router: R
   private let segments: [Segment]
   private var result: [Segment: Segment] = [:]
