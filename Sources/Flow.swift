@@ -8,14 +8,6 @@
 
 import Foundation
 
-public protocol Segment {
-  var value: String { get }
-}
-
-public struct BreachSegment: Segment {
-  public let value: String
-}
-
 protocol Router {
   typealias AnswerCallback = (String) -> Void
   var routedSegment: Segment? { get }

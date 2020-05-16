@@ -12,6 +12,7 @@
 		F478C6AD2460927B002C881D /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F478C6AC2460927B002C881D /* Flow.swift */; };
 		F478C6B024609FED002C881D /* SwiftLintFramework in Frameworks */ = {isa = PBXBuildFile; productRef = F478C6AF24609FED002C881D /* SwiftLintFramework */; };
 		F478C6B42460A2B1002C881D /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = F478C6B32460A2B1002C881D /* SwiftFormat */; };
+		F4BC08CE246F121C00A082DF /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BC08CD246F121C00A082DF /* Segment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		F478C6A0246071F7002C881D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F478C6AA2460737C002C881D /* FlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTests.swift; sourceTree = "<group>"; };
 		F478C6AC2460927B002C881D /* Flow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
+		F4BC08CD246F121C00A082DF /* Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 			children = (
 				F478C694246071F6002C881D /* Info.plist */,
 				F478C6AC2460927B002C881D /* Flow.swift */,
+				F4BC08CD246F121C00A082DF /* Segment.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F478C6AD2460927B002C881D /* Flow.swift in Sources */,
+				F4BC08CE246F121C00A082DF /* Segment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

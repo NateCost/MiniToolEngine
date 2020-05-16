@@ -1,8 +1,5 @@
 # file options
 
---exclude WY Mini Tool Engine/
---exclude WY Mini Tool Engine/Supporting Files
-
 # format options
 
 --allman false
