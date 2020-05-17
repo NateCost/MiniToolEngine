@@ -52,11 +52,7 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
     if let currentSegmentIndex = segments.firstIndex(of: segment) {
       let nextSegmentIndex = currentSegmentIndex + 1
       if segments.count > nextSegmentIndex {
-        let nextSegment = segments[nextSegmentIndex]
-        router.handleSegment(
-          nextSegment,
-          selectionCallback: handleSelection
-        )
+        router.handleSegment(segments[nextSegmentIndex], selectionCallback: handleSelection)
       } else {
         router.routeTo(result: result)
       }      
