@@ -13,14 +13,13 @@ public protocol Router {
   typealias SelectionCallback = (Segment, Segment) -> Void
   
   func handleSegment(_ segment: Segment, selectionCallback: @escaping SelectionCallback)
-  func finish(result: [Segment: Segment])
+  func finish()
   func failedAttempt(for segment: Segment)
 }
 
 public class Flow<Segment, R: Router> where R.Segment == Segment {
   private let router: R
   private let segments: [Segment]
-  private var result: [Segment: Segment] = [:]
   
   init(segments: [Segment], router: R) {
     self.segments = segments
@@ -31,13 +30,11 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
     if let firstSegment = segments.first {
       router.handleSegment(firstSegment, selectionCallback: handleSelection)
     } else {
-      router.finish(result: result)
+      router.finish()
     }
   }
   
   private func handleSelection(selection: Segment, for segment: Segment) {
-    result[segment] = selection
-    
     if selectionValidation(segment: segment, selection: selection) {
       routeNext(from: segment)
     } else {
@@ -55,7 +52,7 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
       if segments.count > nextSegmentIndex {
         router.handleSegment(segments[nextSegmentIndex], selectionCallback: handleSelection)
       } else {
-        router.finish(result: result)
+        router.finish()
       }      
     }
   }

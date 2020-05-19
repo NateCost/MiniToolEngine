@@ -63,13 +63,13 @@ class FlowTests: XCTestCase {
   func test_start_withNoSegments_routeToResult() {
     makeSUT(segments: []).start()
     
-    XCTAssertEqual(router.routedResult, [:])
+    XCTAssertTrue(router.finished)
   }
   
   func test_start_withOneSegments_doesNotRouteToResult() {
     makeSUT(segments: [SegmentSpy(value: "one")]).start()
     
-    XCTAssertNil(router.routedResult)
+    XCTAssertFalse(router.finished)
   }
   
   func test_startAndGiveRightAnswer_withOneSegment_routesToResult() {
@@ -77,7 +77,7 @@ class FlowTests: XCTestCase {
     
     router.selectionCallback(SegmentSpy(value: "one"), SegmentSpy(value: "one"))
     
-    XCTAssertEqual(router.routedResult, [SegmentSpy(value: "one"): SegmentSpy(value: "one")])
+    XCTAssertTrue(router.finished)
   }
   
   func test_startAndGiveRightAnswer_withTwoSegments_routesToResult() {
@@ -90,13 +90,7 @@ class FlowTests: XCTestCase {
     router.selectionCallback(SegmentSpy(value: "one"), SegmentSpy(value: "one"))
     router.selectionCallback(SegmentSpy(value: "two"), SegmentSpy(value: "two"))
     
-    XCTAssertEqual(
-      router.routedResult,
-      [
-        SegmentSpy(value: "one"): SegmentSpy(value: "one"),
-        SegmentSpy(value: "two"): SegmentSpy(value: "two")
-      ]
-    )
+    XCTAssertTrue(router.finished)
   }
   
   func test_startAndGiveOneRightAnswer_withTwoSegments_doesNotRouteToResult() {
@@ -108,7 +102,7 @@ class FlowTests: XCTestCase {
     
     router.selectionCallback(SegmentSpy(value: "one"), SegmentSpy(value: "one"))
     
-    XCTAssertNil(router.routedResult)
+    XCTAssertFalse(router.finished)
   }
   
   func test_startAndGiveWrongAnswer_withTwoSegments_doesNotRouteToSecond() {
@@ -150,8 +144,8 @@ class FlowTests: XCTestCase {
   
   class RouterSpy: Router {
     var routedSegment: SegmentSpy?
-    var routedResult: [SegmentSpy: SegmentSpy]?
     var failedSegment: SegmentSpy?
+    var finished = false
     var selectionCallback: (SegmentSpy, SegmentSpy) -> Void = { _, _ in }
     
     func handleSegment(
@@ -162,8 +156,8 @@ class FlowTests: XCTestCase {
       self.selectionCallback = selectionCallback
     }
     
-    func finish(result: [SegmentSpy: SegmentSpy]) {
-      routedResult = result
+    func finish() {
+      finished = true
     }
     
     func failedAttempt(for segment: SegmentSpy) {
