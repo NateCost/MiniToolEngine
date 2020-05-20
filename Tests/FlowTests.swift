@@ -165,7 +165,7 @@ class FlowTests: XCTestCase {
     }
   }
   
-  struct SegmentSpy: Valuable, Hashable {
+  struct SegmentSpy: Hashable {
     var value: String
   }
 }

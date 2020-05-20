@@ -8,10 +8,13 @@
 
 import Foundation
 
-public protocol Valuable {
-  var value: String { get }
+public protocol Statable {
+  associatedtype StateType
+  var state: StateType { get set }
 }
 
-public struct BreachSegment: Valuable {
-  public let value: String
+public enum SegmentState {
+  case selected
+  case passed
+  case failed
 }
