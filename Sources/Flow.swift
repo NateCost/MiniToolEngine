@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol Router {
-  associatedtype Segment: Hashable
+  associatedtype Segment: Hashable, Valuable
   typealias SelectionCallback = (Segment, Segment) -> Void
   
   func handleSegment(_ segment: Segment, selectionCallback: @escaping SelectionCallback)
@@ -43,7 +43,7 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
   }
   
   private func selectionValidation(segment: Segment, selection: Segment) -> Bool {
-    segment == selection
+    segment.value == selection.value
   }
   
   private func routeNext(from segment: Segment) {

@@ -9,12 +9,18 @@
 import Foundation
 
 public protocol Statable {
-  associatedtype StateType
-  var state: StateType { get set }
+  associatedtype State
+  var state: State { get set }
+}
+
+public protocol Valuable {
+  associatedtype Value: Equatable
+  var value: Value { get set }
 }
 
 public enum SegmentState {
   case selected
   case passed
   case failed
+  case none
 }

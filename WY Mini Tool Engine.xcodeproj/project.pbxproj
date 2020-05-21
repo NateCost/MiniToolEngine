@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F45F70AE2476E61300389C76 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45F70AD2476E61300389C76 /* Helpers.swift */; };
 		F478C69A246071F7002C881D /* WY_Mini_Tool_Engine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F478C690246071F6002C881D /* WY_Mini_Tool_Engine.framework */; };
 		F478C6AB2460737C002C881D /* FlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F478C6AA2460737C002C881D /* FlowTests.swift */; };
 		F478C6AD2460927B002C881D /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F478C6AC2460927B002C881D /* Flow.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F45F70AD2476E61300389C76 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		F478C690246071F6002C881D /* WY_Mini_Tool_Engine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WY_Mini_Tool_Engine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F478C694246071F6002C881D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F478C699246071F7002C881D /* WY Mini Tool EngineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "WY Mini Tool EngineTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +82,7 @@
 				F478C694246071F6002C881D /* Info.plist */,
 				F478C6AC2460927B002C881D /* Flow.swift */,
 				F4BC08CD246F121C00A082DF /* Segment.swift */,
+				F45F70AD2476E61300389C76 /* Helpers.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F478C6AD2460927B002C881D /* Flow.swift in Sources */,
+				F45F70AE2476E61300389C76 /* Helpers.swift in Sources */,
 				F4BC08CE246F121C00A082DF /* Segment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
