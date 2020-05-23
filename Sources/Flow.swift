@@ -20,15 +20,17 @@ public protocol Router {
 public class Flow<Segment, R: Router> where R.Segment == Segment {
   private let router: R
   private let segments: [Segment]
+  private let segmentsToSelect: [Segment]
   
-  init(segments: [Segment], router: R) {
+  init(segments: [Segment], segmentsToSelect: [Segment], router: R) {
     self.segments = segments
+    self.segmentsToSelect = segmentsToSelect
     self.router = router
   }
   
   public func start() {
-    if var firstSegment = segments.first {
-      firstSegment.state = .selected
+    if let firstSegment = segments.first {
+      firstSegment.setState(.selected)
       router.handleSegment(firstSegment, selectionCallback: handleSelection)
     } else {
       router.finish()
@@ -36,6 +38,13 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
   }
   
   private func handleSelection(selection: Segment, for segment: Segment) {
+    guard segmentsToSelect.contains(selection) else {
+      router.finish()
+      return
+    }
+    
+    selection.setState(.selected)
+    
     if selectionValidation(segment: segment, selection: selection) {
       routeNext(from: segment)
     } else {

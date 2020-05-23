@@ -9,7 +9,8 @@
 import Foundation
 
 public protocol Statable {
-  var state: SegmentState { get set }
+  var state: SegmentState { get }
+  func setState(_ state: SegmentState)
 }
 
 public protocol Valuable {
