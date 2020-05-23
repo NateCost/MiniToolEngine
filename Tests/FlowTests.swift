@@ -137,6 +137,22 @@ class FlowTests: XCTestCase {
     XCTAssertEqual(router.failedSegment, segment2)
   }
   
+  // MARK: - States
+  func test_start_withOneSegment_setSelectedState() {
+    let segment = SegmentSpy(value: "one")
+    makeSUT(segments: [segment]).start()
+    
+    XCTAssertEqual(segment.state, .selected)
+  }
+  
+  func test_start_withTwoSegment_secondSegmentHasNoneState() {
+    let segment1 = SegmentSpy(value: "one")
+    let segment2 = SegmentSpy(value: "one")
+    makeSUT(segments: [segment1, segment2]).start()
+    
+    XCTAssertEqual(segment2.state, .none)
+  }
+  
   // MARK: - Helpers
   func makeSUT(segments: [SegmentSpy]) -> Flow<SegmentSpy, RouterSpy> {
     Flow(segments: segments, router: router)
@@ -165,8 +181,9 @@ class FlowTests: XCTestCase {
     }
   }
   
-  class SegmentSpy: Hashable, Valuable {
+  class SegmentSpy: Hashable, Valuable, Statable {
     var value: String = ""
+    var state: SegmentState = .none
     
     init(value: String) {
       self.value = value

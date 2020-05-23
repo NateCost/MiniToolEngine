@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol Router {
-  associatedtype Segment: Hashable, Valuable
+  associatedtype Segment: Hashable, Valuable, Statable
   typealias SelectionCallback = (Segment, Segment) -> Void
   
   func handleSegment(_ segment: Segment, selectionCallback: @escaping SelectionCallback)
@@ -27,7 +27,8 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
   }
   
   public func start() {
-    if let firstSegment = segments.first {
+    if var firstSegment = segments.first {
+      firstSegment.state = .selected
       router.handleSegment(firstSegment, selectionCallback: handleSelection)
     } else {
       router.finish()

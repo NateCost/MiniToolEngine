@@ -9,8 +9,7 @@
 import Foundation
 
 public protocol Statable {
-  associatedtype State
-  var state: State { get set }
+  var state: SegmentState { get set }
 }
 
 public protocol Valuable {
