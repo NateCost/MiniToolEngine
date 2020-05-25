@@ -128,33 +128,6 @@ class FlowTests: XCTestCase {
     XCTAssertEqual(router.routedSegment, segment)
   }
   
-  func test_startAndGiveWrongAnswer_triggersFailedAttempt() {
-    let segment = SegmentSpy(value: "one")
-    let segments = [segment, SegmentSpy(value: "two")]
-    let segmentToSelect = SegmentSpy(value: "oone")
-    makeSUT(segments: segments, segmentsToSelect: [segmentToSelect]).start()
-    
-    router.selectionCallback(segmentToSelect, segment)
-    
-    XCTAssertEqual(router.failedSegment, segment)
-  }
-  
-  func test_startAndGiveFirstRightAndSecondWrongAnswers_twoSegments_triggersFailedAttempt() {
-    let segment1 = SegmentSpy(value: "one")
-    let segment2 = SegmentSpy(value: "two")
-    let segmentToSelect1 = SegmentSpy(value: "one")
-    let segmentToSelect2 = SegmentSpy(value: "oone")
-    makeSUT(
-      segments: [segment1, segment2],
-      segmentsToSelect: [segmentToSelect1, segmentToSelect2]
-    ).start()
-    
-    router.selectionCallback(segmentToSelect1, segment1)
-    router.selectionCallback(segmentToSelect2, segment2)
-    
-    XCTAssertEqual(router.failedSegment, segment2)
-  }
-  
   // MARK: - States
   func test_start_withTwoSegment_segmentsHaveProperStates() {
     let segment1 = SegmentSpy(value: "one")
@@ -218,7 +191,6 @@ class FlowTests: XCTestCase {
   
   class RouterSpy: Router {
     var routedSegment: SegmentSpy?
-    var failedSegment: SegmentSpy?
     var finished = false
     var selectionCallback: (SegmentSpy, SegmentSpy) -> Void = { _, _ in }
     
@@ -233,11 +205,6 @@ class FlowTests: XCTestCase {
     func finish() {
       finished = true
       routedSegment = nil
-      failedSegment = nil
-    }
-    
-    func failedAttempt(for segment: SegmentSpy) {
-      failedSegment = segment
     }
   }
   

@@ -14,7 +14,6 @@ public protocol Router {
   
   func handleSegment(_ segment: Segment, selectionCallback: @escaping SelectionCallback)
   func finish()
-  func failedAttempt(for segment: Segment)
 }
 
 public class Flow<Segment, R: Router> where R.Segment == Segment {
@@ -50,7 +49,6 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
       routeNext(from: segment)
     } else {
       segment.setState(.failed)
-      router.failedAttempt(for: segment)
     }
   }
   
