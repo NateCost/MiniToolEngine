@@ -175,6 +175,42 @@ class FlowTests: XCTestCase {
     XCTAssertEqual(segmentToSelect.state, .selected)
   }
   
+  func test_startAndAnswerRightFirst_withOneSegment_makesSegmentPassed() {
+    let segment = SegmentSpy(value: "one")
+    let segmentToSelect = SegmentSpy(value: "one")
+    makeSUT(segments: [segment], segmentsToSelect: [segmentToSelect]).start()
+    
+    router.selectionCallback(segmentToSelect, segment)
+    
+    XCTAssertEqual(segment.state, .passed)
+  }
+  
+  func test_startAndAnswerWrongFirst_withOneSegment_makesSegmentFailed() {
+    let segment = SegmentSpy(value: "one")
+    let segmentToSelect = SegmentSpy(value: "two")
+    makeSUT(segments: [segment], segmentsToSelect: [segmentToSelect]).start()
+    
+    router.selectionCallback(segmentToSelect, segment)
+    
+    XCTAssertEqual(segment.state, .failed)
+  }
+  
+  func test_startAndAnswerTwoSegments_withTwoSegments_makesFirstSelectedSegmentDeselected() {
+    let segment1 = SegmentSpy(value: "one")
+    let segment2 = SegmentSpy(value: "two")
+    let segmentToSelect1 = SegmentSpy(value: "one")
+    let segmentToSelect2 = SegmentSpy(value: "two")
+    makeSUT(
+      segments: [segment1, segment2],
+      segmentsToSelect: [segmentToSelect1, segmentToSelect2]
+    ).start()
+    
+    router.selectionCallback(segmentToSelect1, segment1)
+    router.selectionCallback(segmentToSelect2, segment2)
+    
+    XCTAssertEqual(segmentToSelect1.state, .none)
+  }
+  
   // MARK: - Helpers
   func makeSUT(segments: [SegmentSpy], segmentsToSelect: [SegmentSpy] = []) -> Flow<SegmentSpy, RouterSpy> {
     Flow(segments: segments, segmentsToSelect: segmentsToSelect, router: router)

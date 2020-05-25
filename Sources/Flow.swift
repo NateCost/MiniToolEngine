@@ -46,8 +46,10 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
     selection.setState(.selected)
     
     if selectionValidation(segment: segment, selection: selection) {
+      segment.setState(.passed)
       routeNext(from: segment)
     } else {
+      segment.setState(.failed)
       router.failedAttempt(for: segment)
     }
   }
@@ -60,10 +62,15 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
     if let currentSegmentIndex = segments.firstIndex(of: segment) {
       let nextSegmentIndex = currentSegmentIndex + 1
       if segments.count > nextSegmentIndex {
+        deselectAllSegments()
         router.handleSegment(segments[nextSegmentIndex], selectionCallback: handleSelection)
       } else {
         router.finish()
       }      
     }
+  }
+  
+  private func deselectAllSegments() {
+    segmentsToSelect.forEach { $0.setState(.none) }
   }
 }
