@@ -202,6 +202,10 @@ class FlowTests: XCTestCase {
       self.selectionCallback = selectionCallback
     }
     
+    func updateSegment(_ segment: SegmentSpy, with state: SegmentState) {
+      segment.setState(state)
+    }
+    
     func finish() {
       finished = true
       routedSegment = nil

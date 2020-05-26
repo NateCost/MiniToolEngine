@@ -13,6 +13,7 @@ public protocol Router {
   typealias SelectionCallback = (Segment, Segment) -> Void
   
   func handleSegment(_ segment: Segment, selectionCallback: @escaping SelectionCallback)
+  func updateSegment(_ segment: Segment, with state: SegmentState)
   func finish()
 }
 
@@ -29,7 +30,7 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
   
   public func start() {
     if let firstSegment = segments.first {
-      firstSegment.setState(.selected)
+      router.updateSegment(firstSegment, with: .selected)
       router.handleSegment(firstSegment, selectionCallback: handleSelection)
     } else {
       router.finish()
@@ -42,13 +43,13 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
       return
     }
     
-    selection.setState(.selected)
+    router.updateSegment(selection, with: .selected)
     
     if selectionValidation(segment: segment, selection: selection) {
-      segment.setState(.passed)
+      router.updateSegment(segment, with: .passed)
       routeNext(from: segment)
     } else {
-      segment.setState(.failed)
+      router.updateSegment(segment, with: .failed)
     }
   }
   
@@ -69,6 +70,6 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
   }
   
   private func deselectAllSegments() {
-    segmentsToSelect.forEach { $0.setState(.none) }
+    segmentsToSelect.forEach { router.updateSegment($0, with: .none) }
   }
 }
