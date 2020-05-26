@@ -1,3 +1,5 @@
-# WY Mini Tool Engine
+[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
-A description of this package.
+## About
+
+Just a simple game engine where user get 2 array of items and need to find items from first array inside second one.

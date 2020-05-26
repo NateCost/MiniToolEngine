@@ -14,6 +14,7 @@
 		F478C6B024609FED002C881D /* SwiftLintFramework in Frameworks */ = {isa = PBXBuildFile; productRef = F478C6AF24609FED002C881D /* SwiftLintFramework */; };
 		F478C6B42460A2B1002C881D /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = F478C6B32460A2B1002C881D /* SwiftFormat */; };
 		F4BC08CE246F121C00A082DF /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BC08CD246F121C00A082DF /* Segment.swift */; };
+		F4EB4F1B247D728500490E62 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F4EB4F1A247D728500490E62 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 		F478C6AA2460737C002C881D /* FlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTests.swift; sourceTree = "<group>"; };
 		F478C6AC2460927B002C881D /* Flow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
 		F4BC08CD246F121C00A082DF /* Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
+		F4EB4F1A247D728500490E62 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 			children = (
 				F478C6A0246071F7002C881D /* Info.plist */,
 				F478C6AA2460737C002C881D /* FlowTests.swift */,
+				F4EB4F1A247D728500490E62 /* README.md */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4EB4F1B247D728500490E62 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
