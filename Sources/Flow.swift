@@ -1,7 +1,4 @@
 //
-//  Flow.swift
-//  WY Mini Tool Engine
-//
 //  Created by Ilya Sakalou on 5/4/20.
 //  Copyright © 2020 Nirma. All rights reserved.
 //
@@ -74,9 +71,9 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
   }
   
   private func deselectAllSegments() {
-    segmentsToSelect.forEach {
-      $0.setState(.none)
-      router.segmentUpdated($0)
+    for segment in segmentsToSelect {
+      segment.setState(.none)
+      router.segmentUpdated(segment)
     }
   }
 }

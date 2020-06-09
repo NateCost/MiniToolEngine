@@ -1,7 +1,4 @@
 //
-//  FlowTests.swift
-//  WY Mini Tool EngineTests
-//
 //  Created by Ilya Sakalou on 5/4/20.
 //  Copyright © 2020 Nirma. All rights reserved.
 //
@@ -133,6 +130,7 @@ class FlowTests: XCTestCase {
     makeSUT(segments: [segment1, segment2]).start()
     
     XCTAssertEqual(segment1.state, .selected)
+    XCTAssertEqual(router.updatedSegment, segment1)
     XCTAssertEqual(segment2.state, .none)
   }
   
@@ -144,6 +142,7 @@ class FlowTests: XCTestCase {
     router.selectionCallback(segmentToSelect, segment)
     
     XCTAssertEqual(segmentToSelect.state, .selected)
+    XCTAssertEqual(router.updatedSegment, segment)
   }
   
   func test_startAndAnswerRightFirst_withOneSegment_makesSegmentPassed() {
@@ -154,6 +153,7 @@ class FlowTests: XCTestCase {
     router.selectionCallback(segmentToSelect, segment)
     
     XCTAssertEqual(segment.state, .passed)
+    XCTAssertEqual(router.updatedSegment, segment)
   }
   
   func test_startAndAnswerWrongFirst_withOneSegment_makesSegmentFailed() {
@@ -164,6 +164,7 @@ class FlowTests: XCTestCase {
     router.selectionCallback(segmentToSelect, segment)
     
     XCTAssertEqual(segment.state, .failed)
+    XCTAssertEqual(router.updatedSegment, segment)
   }
   
   func test_startAndAnswerTwoSegments_withTwoSegments_makesFirstSelectedSegmentDeselected() {
@@ -191,6 +192,7 @@ class FlowTests: XCTestCase {
     var routedSegment: SegmentSpy?
     var finished = false
     var selectionCallback: (SegmentSpy, SegmentSpy) -> Void = { _, _ in }
+    var updatedSegment: SegmentSpy?
     
     func handleSegment(
       _ segment: SegmentSpy,
@@ -200,7 +202,9 @@ class FlowTests: XCTestCase {
       self.selectionCallback = selectionCallback
     }
     
-    func segmentUpdated(_ segment: SegmentSpy) {}
+    func segmentUpdated(_ segment: SegmentSpy) {
+      updatedSegment = segment
+    }
     
     func finish() {
       finished = true

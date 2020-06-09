@@ -1,7 +1,4 @@
 //
-//  Helpers.swift
-//  WY Mini Tool Engine
-//
 //  Created by Ilya Sakalou on 5/21/20.
 //  Copyright © 2020 Nirma. All rights reserved.
 //
