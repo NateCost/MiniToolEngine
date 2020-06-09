@@ -49,16 +49,14 @@ class FlowTests: XCTestCase {
   }
   
   func test_startTwice_withSegments_routeToFirstSegmentTwice() {
-    let segments = [
-      SegmentSpy(value: "one"),
-      SegmentSpy(value: "two")
-    ]
+    let first = SegmentSpy(value: "one")
+    let segments = [first, SegmentSpy(value: "two")]
     let sut = makeSUT(segments: segments)
     
     sut.start()
     sut.start()
      
-    XCTAssertEqual(router.routedSegment?.value, SegmentSpy(value: "one").value)
+    XCTAssertEqual(router.routedSegment, first)
   }
   
   func test_start_withNoSegments_routeToResult() {
@@ -202,9 +200,7 @@ class FlowTests: XCTestCase {
       self.selectionCallback = selectionCallback
     }
     
-    func updateSegment(_ segment: SegmentSpy, with state: SegmentState) {
-      segment.setState(state)
-    }
+    func segmentUpdated(_ segment: SegmentSpy) {}
     
     func finish() {
       finished = true

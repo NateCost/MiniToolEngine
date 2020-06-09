@@ -13,7 +13,7 @@ public protocol Router {
   typealias SelectionCallback = (Segment, Segment) -> Void
   
   func handleSegment(_ segment: Segment, selectionCallback: @escaping SelectionCallback)
-  func updateSegment(_ segment: Segment, with state: SegmentState)
+  func segmentUpdated(_ segment: Segment)
   func finish()
 }
 
@@ -30,7 +30,8 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
   
   public func start() {
     if let firstSegment = segments.first {
-      router.updateSegment(firstSegment, with: .selected)
+      firstSegment.setState(.selected)
+      router.segmentUpdated(firstSegment)
       router.handleSegment(firstSegment, selectionCallback: handleSelection)
     } else {
       router.finish()
@@ -43,13 +44,16 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
       return
     }
     
-    router.updateSegment(selection, with: .selected)
+    selection.setState(.selected)
+    router.segmentUpdated(selection)
     
     if selectionValidation(segment: segment, selection: selection) {
-      router.updateSegment(segment, with: .passed)
+      segment.setState(.passed)
+      router.segmentUpdated(segment)
       routeNext(from: segment)
     } else {
-      router.updateSegment(segment, with: .failed)
+      segment.setState(.failed)
+      router.segmentUpdated(segment)
     }
   }
   
@@ -70,6 +74,9 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
   }
   
   private func deselectAllSegments() {
-    segmentsToSelect.forEach { router.updateSegment($0, with: .none) }
+    segmentsToSelect.forEach {
+      $0.setState(.none)
+      router.segmentUpdated($0)
+    }
   }
 }
