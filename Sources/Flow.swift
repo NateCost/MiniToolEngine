@@ -19,7 +19,7 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
   private let segments: [Segment]
   private let segmentsToSelect: [Segment]
   
-  init(segments: [Segment], segmentsToSelect: [Segment], router: R) {
+  public init(segments: [Segment], segmentsToSelect: [Segment], router: R) {
     self.segments = segments
     self.segmentsToSelect = segmentsToSelect
     self.router = router
