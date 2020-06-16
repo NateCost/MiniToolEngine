@@ -9,124 +9,102 @@ import XCTest
 
 class FlowTests: XCTestCase {
   let router = RouterSpy()
+  let segment1 = SegmentSpy(value: "one")
+  let segment2 = SegmentSpy(value: "two")
   
   func test_start_withNoSegments_doesNotRouteToSegment() {
     makeSUT(segments: []).start()
-    
     XCTAssertNil(router.routedSegment)
   }
   
   func test_start_withSegments_routeToFirstSegment() {
-    let segment = SegmentSpy(value: "one")
-    makeSUT(segments: [segment]).start()
-    
-    XCTAssertEqual(router.routedSegment, segment)
+    makeSUT(segments: [segment1]).start()
+    XCTAssertEqual(router.routedSegment, segment1)
   }
   
   func test_startAndSelectUndefinedSegment_withTwoSegmentToBreach_finishFlow() {
-    let firstSegment = SegmentSpy(value: "one")
-    let secondSegment = SegmentSpy(value: "two")
-    let segments = [firstSegment, secondSegment]
+    let segments = [segment1, segment2]
     makeSUT(segments: segments).start()
     
-    router.selectionCallback(SegmentSpy(value: "one"), firstSegment)
+    router.selectionCallback(SegmentSpy(value: "one"), segment1)
     
     XCTAssertTrue(router.finished)
   }
   
   func test_startAndChooseSameSegment_withSegments_routesToNextSegment() {
-    let firstSegment = SegmentSpy(value: "one")
-    let secondSegment = SegmentSpy(value: "two")
     let segmentToSelect = SegmentSpy(value: "one")
-    makeSUT(segments: [firstSegment, secondSegment], segmentsToSelect: [segmentToSelect]).start()
+    makeSUT(segments: [segment1, segment2], segmentsToSelect: [segmentToSelect]).start()
     
-    router.selectionCallback(segmentToSelect, firstSegment)
+    router.selectionCallback(segmentToSelect, segment1)
     
-    XCTAssertEqual(router.routedSegment, secondSegment)
+    XCTAssertEqual(router.routedSegment, segment2)
   }
   
   func test_startTwice_withSegments_routeToFirstSegmentTwice() {
-    let first = SegmentSpy(value: "one")
-    let segments = [first, SegmentSpy(value: "two")]
-    let sut = makeSUT(segments: segments)
+    let sut = makeSUT(segments: [segment1, segment2])
     
     sut.start()
     sut.start()
      
-    XCTAssertEqual(router.routedSegment, first)
+    XCTAssertEqual(router.routedSegment, segment1)
   }
   
   func test_start_withNoSegments_routeToResult() {
     makeSUT(segments: []).start()
-    
     XCTAssertTrue(router.finished)
   }
   
   func test_start_withOneSegments_doesNotFinished() {
-    makeSUT(segments: [SegmentSpy(value: "one")]).start()
-    
+    makeSUT(segments: [segment1]).start()
     XCTAssertFalse(router.finished)
   }
   
   func test_startAndGiveRightAnswer_withOneSegment_finishesFlow() {
-    let segment = SegmentSpy(value: "one")
-    makeSUT(segments: [segment]).start()
+    makeSUT(segments: [segment1]).start()
     
-    router.selectionCallback(SegmentSpy(value: "one"), segment)
+    router.selectionCallback(SegmentSpy(value: "one"), segment1)
     
     XCTAssertTrue(router.finished)
   }
   
   func test_startAndGiveWrongAnswer_withOneSegment_doesNotfinishFlow() {
-    let segment = SegmentSpy(value: "one")
     let segmentToSelect = SegmentSpy(value: "two")
-    makeSUT(segments: [segment], segmentsToSelect: [segmentToSelect]).start()
+    makeSUT(segments: [segment1], segmentsToSelect: [segmentToSelect]).start()
     
-    router.selectionCallback(segmentToSelect, segment)
+    router.selectionCallback(segmentToSelect, segment1)
     
     XCTAssertFalse(router.finished)
   }
   
   func test_startAndGiveRightAnswer_withTwoSegments_finishesFlow() {
-    let firstSegment = SegmentSpy(value: "one")
-    let secondSegment = SegmentSpy(value: "two")
-    let segments = [firstSegment, secondSegment]
+    makeSUT(segments: [segment1, segment2]).start()
     
-    makeSUT(segments: segments).start()
-    
-    router.selectionCallback(SegmentSpy(value: "one"), firstSegment)
-    router.selectionCallback(SegmentSpy(value: "two"), secondSegment)
+    router.selectionCallback(SegmentSpy(value: "one"), segment1)
+    router.selectionCallback(SegmentSpy(value: "two"), segment2)
     
     XCTAssertTrue(router.finished)
   }
   
   func test_startAndGiveOneRightAnswer_withTwoSegments_doesNotFinishFlow() {
-    let firstSegment = SegmentSpy(value: "one")
-    let secondSegment = SegmentSpy(value: "two")
-    let segments = [firstSegment, secondSegment]
     let segmentToSelect = SegmentSpy(value: "one")
-    makeSUT(segments: segments, segmentsToSelect: [segmentToSelect]).start()
+    makeSUT(segments: [segment1, segment2], segmentsToSelect: [segmentToSelect]).start()
     
-    router.selectionCallback(segmentToSelect, firstSegment)
+    router.selectionCallback(segmentToSelect, segment1)
     
     XCTAssertFalse(router.finished)
   }
   
   func test_startAndGiveWrongAnswer_withTwoSegments_doesNotRouteToSecond() {
-    let segment = SegmentSpy(value: "one")
-    let segments = [segment, SegmentSpy(value: "two")]
     let segmentToSelect = SegmentSpy(value: "oone")
-    makeSUT(segments: segments, segmentsToSelect: [segmentToSelect]).start()
+    makeSUT(segments: [segment1, segment2], segmentsToSelect: [segmentToSelect]).start()
     
-    router.selectionCallback(segmentToSelect, segment)
+    router.selectionCallback(segmentToSelect, segment1)
     
-    XCTAssertEqual(router.routedSegment, segment)
+    XCTAssertEqual(router.routedSegment, segment1)
   }
   
   // MARK: - States
   func test_start_withTwoSegment_segmentsHaveProperStates() {
-    let segment1 = SegmentSpy(value: "one")
-    let segment2 = SegmentSpy(value: "two")
     makeSUT(segments: [segment1, segment2]).start()
     
     XCTAssertEqual(segment1.state, .selected)
@@ -135,41 +113,36 @@ class FlowTests: XCTestCase {
   }
   
   func test_startAndAnswerFirst_withOneSegment_selectedSegmentHasProperState() {
-    let segment = SegmentSpy(value: "one")
     let segmentToSelect = SegmentSpy(value: "one")
-    makeSUT(segments: [segment], segmentsToSelect: [segmentToSelect]).start()
+    makeSUT(segments: [segment1], segmentsToSelect: [segmentToSelect]).start()
     
-    router.selectionCallback(segmentToSelect, segment)
+    router.selectionCallback(segmentToSelect, segment1)
     
     XCTAssertEqual(segmentToSelect.state, .selected)
-    XCTAssertEqual(router.updatedSegment, segment)
+    XCTAssertEqual(router.updatedSegment, segment1)
   }
   
   func test_startAndAnswerRightFirst_withOneSegment_makesSegmentPassed() {
-    let segment = SegmentSpy(value: "one")
     let segmentToSelect = SegmentSpy(value: "one")
-    makeSUT(segments: [segment], segmentsToSelect: [segmentToSelect]).start()
+    makeSUT(segments: [segment1], segmentsToSelect: [segmentToSelect]).start()
     
-    router.selectionCallback(segmentToSelect, segment)
+    router.selectionCallback(segmentToSelect, segment1)
     
-    XCTAssertEqual(segment.state, .passed)
-    XCTAssertEqual(router.updatedSegment, segment)
+    XCTAssertEqual(segment1.state, .passed)
+    XCTAssertEqual(router.updatedSegment, segment1)
   }
   
   func test_startAndAnswerWrongFirst_withOneSegment_makesSegmentFailed() {
-    let segment = SegmentSpy(value: "one")
     let segmentToSelect = SegmentSpy(value: "two")
-    makeSUT(segments: [segment], segmentsToSelect: [segmentToSelect]).start()
+    makeSUT(segments: [segment1], segmentsToSelect: [segmentToSelect]).start()
     
-    router.selectionCallback(segmentToSelect, segment)
+    router.selectionCallback(segmentToSelect, segment1)
     
-    XCTAssertEqual(segment.state, .failed)
-    XCTAssertEqual(router.updatedSegment, segment)
+    XCTAssertEqual(segment1.state, .failed)
+    XCTAssertEqual(router.updatedSegment, segment1)
   }
   
   func test_startAndAnswerTwoSegments_passFirstSegmentAndNavigateToSecondOne_deselectsAllSegments() {
-    let segment1 = SegmentSpy(value: "one")
-    let segment2 = SegmentSpy(value: "two")
     let segmentToSelect1 = SegmentSpy(value: "one")
     let segmentToSelect2 = SegmentSpy(value: "two")
     makeSUT(
@@ -184,8 +157,6 @@ class FlowTests: XCTestCase {
   }
   
   func test_deselection_startWithSegmentAndSelections_selectTwoWrongSegments_deselectsFirstWrongSegment() {
-    let segment1 = SegmentSpy(value: "one")
-    let segment2 = SegmentSpy(value: "two")
     let segmentToSelect1 = SegmentSpy(value: "one")
     let segmentToSelect2 = SegmentSpy(value: "two")
     let segmentToSelect3 = SegmentSpy(value: "three")
