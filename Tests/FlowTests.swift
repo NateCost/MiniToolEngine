@@ -167,7 +167,7 @@ class FlowTests: XCTestCase {
     XCTAssertEqual(router.updatedSegment, segment)
   }
   
-  func test_startAndAnswerTwoSegments_withTwoSegments_makesFirstSelectedSegmentDeselected() {
+  func test_startAndAnswerTwoSegments_passFirstSegmentAndNavigateToSecondOne_deselectsAllSegments() {
     let segment1 = SegmentSpy(value: "one")
     let segment2 = SegmentSpy(value: "two")
     let segmentToSelect1 = SegmentSpy(value: "one")
@@ -181,6 +181,24 @@ class FlowTests: XCTestCase {
     router.selectionCallback(segmentToSelect2, segment2)
     
     XCTAssertEqual(segmentToSelect1.state, .none)
+  }
+  
+  func test_deselection_startWithSegmentAndSelections_selectTwoWrongSegments_deselectsFirstWrongSegment() {
+    let segment1 = SegmentSpy(value: "one")
+    let segment2 = SegmentSpy(value: "two")
+    let segmentToSelect1 = SegmentSpy(value: "one")
+    let segmentToSelect2 = SegmentSpy(value: "two")
+    let segmentToSelect3 = SegmentSpy(value: "three")
+    makeSUT(
+      segments: [segment1, segment2],
+      segmentsToSelect: [segmentToSelect1, segmentToSelect2, segmentToSelect3]
+    ).start()
+    
+    router.selectionCallback(segmentToSelect2, segment1)
+    router.selectionCallback(segmentToSelect3, segment1)
+    
+    XCTAssertEqual(segmentToSelect2.state, .none)
+    XCTAssertEqual(segmentToSelect3.state, .selected)
   }
   
   // MARK: - Helpers

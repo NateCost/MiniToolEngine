@@ -41,6 +41,7 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
       return
     }
     
+    deselectAllSegments()
     selection.setState(.selected)
     router.segmentUpdated(selection)
     
@@ -71,7 +72,7 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
   }
   
   private func deselectAllSegments() {
-    for segment in segmentsToSelect {
+    for segment in segmentsToSelect where segment.state != .none {
       segment.setState(.none)
       router.segmentUpdated(segment)
     }
