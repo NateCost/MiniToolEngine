@@ -63,8 +63,10 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
     if let currentSegmentIndex = segments.firstIndex(of: segment) {
       let nextSegmentIndex = currentSegmentIndex + 1
       if segments.count > nextSegmentIndex {
+        let nextSegment = segments[nextSegmentIndex]
         deselectAllSegments()
-        router.handleSegment(segments[nextSegmentIndex], selectionCallback: handleSelection)
+        nextSegment.setState(.selected)
+        router.handleSegment(nextSegment, selectionCallback: handleSelection)
       } else {
         router.finish()
       }      

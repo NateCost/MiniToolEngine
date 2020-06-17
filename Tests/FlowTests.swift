@@ -172,6 +172,19 @@ class FlowTests: XCTestCase {
     XCTAssertEqual(segmentToSelect3.state, .selected)
   }
   
+  func test_deselection_startWithSegmentAndSelections_selectRightSegment_selectNextSegmentToBreach() {
+    let segmentToSelect1 = SegmentSpy(value: "one")
+    let segmentToSelect2 = SegmentSpy(value: "two")
+    makeSUT(
+      segments: [segment1, segment2],
+      segmentsToSelect: [segmentToSelect1, segmentToSelect2]
+    ).start()
+    
+    router.selectionCallback(segmentToSelect1, segment1)
+    
+    XCTAssertEqual(segment2.state, .selected)
+  }
+  
   // MARK: - Helpers
   func makeSUT(segments: [SegmentSpy], segmentsToSelect: [SegmentSpy] = []) -> Flow<SegmentSpy, RouterSpy> {
     Flow(segments: segments, segmentsToSelect: segmentsToSelect, router: router)
