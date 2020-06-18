@@ -182,6 +182,31 @@ class FlowTests: XCTestCase {
     XCTAssertEqual(router.updatedSegments, [segment1, segmentToSelect1, segment1, segmentToSelect1, segment2])
   }
   
+  // MARK: - Flow End
+  func test_finish_startWithSegmentAndSelections_flowHasNoSelectedSegment_finishesFlow() {
+    let segmentToSelect1 = SegmentSpy(value: "one")
+    let segmentToSelect2 = SegmentSpy(value: "two")
+    makeSUT(segments: [segment1, segment2], segmentsToSelect: [segmentToSelect1]).start()
+    
+    router.selectionCallback(segmentToSelect1, segment1)
+    router.selectionCallback(segmentToSelect2, segment2)
+    
+    XCTAssertNil(router.routedSegment)
+    XCTAssertTrue(router.finished)
+  }
+  
+  func test_finish_startWithSegmentAndSelections_passAllSegments_finishesFlow() {
+    let segmentToSelect1 = SegmentSpy(value: "one")
+    let segmentToSelect2 = SegmentSpy(value: "two")
+    makeSUT(segments: [segment1, segment2], segmentsToSelect: [segmentToSelect1, segmentToSelect2]).start()
+    
+    router.selectionCallback(segmentToSelect1, segment1)
+    router.selectionCallback(segmentToSelect2, segment2)
+    
+    XCTAssertNil(router.routedSegment)
+    XCTAssertTrue(router.finished)
+  }
+  
   // MARK: - Helpers
   func makeSUT(segments: [SegmentSpy], segmentsToSelect: [SegmentSpy] = []) -> Flow<SegmentSpy, RouterSpy> {
     Flow(segments: segments, segmentsToSelect: segmentsToSelect, router: router)
