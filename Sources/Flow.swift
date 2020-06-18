@@ -41,7 +41,7 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
       return
     }
     
-    deselectAllSegments()
+    deselectAllSelections()
     selection.setState(.selected)
     router.segmentUpdated(selection)
     
@@ -64,8 +64,9 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
       let nextSegmentIndex = currentSegmentIndex + 1
       if segments.count > nextSegmentIndex {
         let nextSegment = segments[nextSegmentIndex]
-        deselectAllSegments()
+        deselectAllSelections()
         nextSegment.setState(.selected)
+        router.segmentUpdated(nextSegment)
         router.handleSegment(nextSegment, selectionCallback: handleSelection)
       } else {
         router.finish()
@@ -73,7 +74,7 @@ public class Flow<Segment, R: Router> where R.Segment == Segment {
     }
   }
   
-  private func deselectAllSegments() {
+  private func deselectAllSelections() {
     for segment in segmentsToSelect where segment.state != .none {
       segment.setState(.none)
       router.segmentUpdated(segment)

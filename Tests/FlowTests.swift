@@ -108,7 +108,7 @@ class FlowTests: XCTestCase {
     makeSUT(segments: [segment1, segment2]).start()
     
     XCTAssertEqual(segment1.state, .selected)
-    XCTAssertEqual(router.updatedSegment, segment1)
+    XCTAssertEqual(router.updatedSegments, [segment1])
     XCTAssertEqual(segment2.state, .none)
   }
   
@@ -119,7 +119,7 @@ class FlowTests: XCTestCase {
     router.selectionCallback(segmentToSelect, segment1)
     
     XCTAssertEqual(segmentToSelect.state, .selected)
-    XCTAssertEqual(router.updatedSegment, segment1)
+    XCTAssertEqual(router.updatedSegments, [segment1, segmentToSelect, segment1])
   }
   
   func test_startAndAnswerRightFirst_withOneSegment_makesSegmentPassed() {
@@ -129,7 +129,7 @@ class FlowTests: XCTestCase {
     router.selectionCallback(segmentToSelect, segment1)
     
     XCTAssertEqual(segment1.state, .passed)
-    XCTAssertEqual(router.updatedSegment, segment1)
+    XCTAssertEqual(router.updatedSegments, [segment1, segmentToSelect, segment1])
   }
   
   func test_startAndAnswerWrongFirst_withOneSegment_makesSegmentFailed() {
@@ -139,7 +139,7 @@ class FlowTests: XCTestCase {
     router.selectionCallback(segmentToSelect, segment1)
     
     XCTAssertEqual(segment1.state, .failed)
-    XCTAssertEqual(router.updatedSegment, segment1)
+    XCTAssertEqual(router.updatedSegments, [segment1, segmentToSelect, segment1])
   }
   
   func test_startAndAnswerTwoSegments_passFirstSegmentAndNavigateToSecondOne_deselectsAllSegments() {
@@ -174,15 +174,12 @@ class FlowTests: XCTestCase {
   
   func test_deselection_startWithSegmentAndSelections_selectRightSegment_selectNextSegmentToBreach() {
     let segmentToSelect1 = SegmentSpy(value: "one")
-    let segmentToSelect2 = SegmentSpy(value: "two")
-    makeSUT(
-      segments: [segment1, segment2],
-      segmentsToSelect: [segmentToSelect1, segmentToSelect2]
-    ).start()
+    makeSUT(segments: [segment1, segment2], segmentsToSelect: [segmentToSelect1]).start()
     
     router.selectionCallback(segmentToSelect1, segment1)
     
     XCTAssertEqual(segment2.state, .selected)
+    XCTAssertEqual(router.updatedSegments, [segment1, segmentToSelect1, segment1, segmentToSelect1, segment2])
   }
   
   // MARK: - Helpers
@@ -194,7 +191,7 @@ class FlowTests: XCTestCase {
     var routedSegment: SegmentSpy?
     var finished = false
     var selectionCallback: (SegmentSpy, SegmentSpy) -> Void = { _, _ in }
-    var updatedSegment: SegmentSpy?
+    var updatedSegments: [SegmentSpy] = []
     
     func handleSegment(
       _ segment: SegmentSpy,
@@ -205,7 +202,7 @@ class FlowTests: XCTestCase {
     }
     
     func segmentUpdated(_ segment: SegmentSpy) {
-      updatedSegment = segment
+      updatedSegments.append(segment)
     }
     
     func finish() {
