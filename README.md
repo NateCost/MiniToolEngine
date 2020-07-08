@@ -1,5 +1,4 @@
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
-[![codecov](https://codecov.io/gh/NateCost/WY-Mini-Tool-Engine/branch/master/graph/badge.svg)](https://codecov.io/gh/NateCost/WY-Mini-Tool-Engine)
 
 ## About
 
