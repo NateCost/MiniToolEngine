@@ -10,12 +10,14 @@ jobs:
   build:
 
     runs-on: macos-latest
-  
-  steps:
-    - name: Homebrew build helpers install
-      run: brew bundle
-    - name: Show the currently detailed version of Xcode for CLI
-      run: xcode-select -p
-    - name: Show Build Settings
-      run: xcodebuild -project MiniToolEngine.xcodeproj -scheme MiniToolEngine
+    steps:
+      - uses: actions/checkout@v2
+#
+#  steps:
+#    - name: Homebrew build helpers install
+#      run: brew bundle
+#    - name: Show the currently detailed version of Xcode for CLI
+#      run: xcode-select -p
+#    - name: Show Build Settings
+#      run: xcodebuild -project MiniToolEngine.xcodeproj -scheme MiniToolEngine
 
