@@ -12,8 +12,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Show the currently detailed version of Xcode for CLI
+      - name: Show the currently detailed version of Xcode
         run: xcode-select -p
-      - name: Show Build Settings
-        run: xcodebuild build -project MiniToolEngine.xcodeproj -scheme MiniToolEngine -allowProvisioningUpdates
+      - name: Build
+        run: xcodebuild build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -project MiniToolEngine.xcodeproj -scheme MiniToolEngine
 

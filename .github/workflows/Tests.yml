@@ -13,7 +13,7 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
-      - name: Show the currently detailed version of Xcode for CLI
+      - name: Show the currently detailed version of Xcode
         run: xcode-select -p
       - name: build and test
-        run: xcodebuild clean test -scheme MiniToolEngine
+        run: xcodebuild clean test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -scheme MiniToolEngineTests
