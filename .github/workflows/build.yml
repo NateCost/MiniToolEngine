@@ -14,4 +14,5 @@ jobs:
     steps:
     - name: Xcodebuild Action
       run: echo 'Build started'
-      run: xcodebuild clean -project MiniToolEngine.xcodeproj -scheme MiniToolEngine
+      run: |
+        xcodebuild clean -project MiniToolEngine.xcodeproj -scheme MiniToolEngine
