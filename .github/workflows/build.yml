@@ -12,6 +12,10 @@ jobs:
     runs-on: macos-latest
 
     steps:
+    - name: Where I am
+      run: |
+        ls
+      
     - name: Xcodebuild Action
       run: |
         xcodebuild clean -project MiniToolEngine.xcodeproj -scheme MiniToolEngine
