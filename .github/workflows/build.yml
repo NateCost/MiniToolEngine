@@ -12,6 +12,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Homebrew build helpers install
+        run: brew bundle
 #
 #  steps:
 #    - name: Homebrew build helpers install
