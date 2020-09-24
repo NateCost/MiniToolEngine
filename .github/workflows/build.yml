@@ -12,6 +12,14 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: swift build -v
+    - name: Where I am
+      run: |
+        pwd
+        
+    - name: Whats inside
+      run: |
+        ls -a
+      
+    - name: Xcodebuild Action
+      run: |
+        xcodebuild clean -project MiniToolEngine.xcodeproj -scheme MiniToolEngine
