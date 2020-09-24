@@ -12,7 +12,7 @@ jobs:
     runs-on: macos-latest
     
   steps:
-    - name: Checkout Project
+    - name: Checkout
       uses: actions/checkout@v2
     - name: Homebrew build helpers install
       run: brew bundle
