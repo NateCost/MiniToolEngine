@@ -16,4 +16,4 @@ jobs:
       - name: Show the currently detailed version of Xcode
         run: xcode-select -p
       - name: build and test
-        run: xcodebuild clean test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -scheme MiniToolEngineTests
+        run: xcodebuild clean test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -scheme MiniToolEngine
