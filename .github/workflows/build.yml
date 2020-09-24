@@ -15,5 +15,5 @@ jobs:
       - name: Show the currently detailed version of Xcode for CLI
         run: xcode-select -p
       - name: Show Build Settings
-        run: xcodebuild build -project MiniToolEngine.xcodeproj -scheme MiniToolEngine
+        run: xcodebuild build -project MiniToolEngine.xcodeproj -scheme MiniToolEngine -allowProvisioningUpdates
 
