@@ -13,9 +13,5 @@ jobs:
 
     steps:
     - name: Xcodebuild Action
-      uses: sersoft-gmbh/xcodebuild-action@v1.1
-      with:
-        project: MiniToolEngine/MiniToolEngine.xcodeproj
-        scheme: MiniToolEngine
-        destination: platform=macOS
-        action: build
+      run: echo 'Build started'
+      run: xcodebuild clean -project MiniToolEngine.xcodeproj -scheme MiniToolEngine
