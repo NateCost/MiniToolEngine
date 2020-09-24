@@ -5,7 +5,7 @@
 
 import Foundation
 import XCTest
-@testable import WY_Mini_Tool_Engine
+@testable import MiniToolEngine
 
 class FlowTests: XCTestCase {
   let router = RouterSpy()
