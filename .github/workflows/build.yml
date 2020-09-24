@@ -16,13 +16,9 @@ jobs:
       run: |
         pwd
         
-    - name: Step outside
+    - name: Whats inside
       run: |
-        cd ..
-        
-    - name: Where I am
-      run: |
-        pwd
+        ls -a
       
     - name: Xcodebuild Action
       run: |
