@@ -12,8 +12,6 @@ jobs:
     runs-on: macos-latest
     
   steps:
-    - name: Checkout
-      uses: actions/checkout@v2
     - name: Homebrew build helpers install
       run: brew bundle
     - name: Show the currently detailed version of Xcode for CLI
