@@ -14,7 +14,7 @@ jobs:
     steps:
     - name: Where I am
       run: |
-        ls
+        pwd
       
     - name: Xcodebuild Action
       run: |
