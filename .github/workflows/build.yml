@@ -15,7 +15,7 @@ jobs:
     - name: Xcodebuild Action
       uses: sersoft-gmbh/xcodebuild-action@v1.1
       with:
-        project: MiniToolEngine.xcodeproj
+        project: MiniToolEngine/MiniToolEngine.xcodeproj
         scheme: MiniToolEngine
         destination: platform=macOS
         action: build
