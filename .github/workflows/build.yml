@@ -12,6 +12,10 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: swift build -v
+    - name: Xcodebuild Action
+      uses: sersoft-gmbh/xcodebuild-action@v1.1
+      with:
+        project: MiniToolEngine.xcodeproj
+        scheme: MiniToolEngine
+        destination: platform=macOS
+        action: build
