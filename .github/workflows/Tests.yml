@@ -10,12 +10,10 @@ jobs:
   build:
 
     runs-on: macos-latest
-
+    
     steps:
-    - name: Xcodebuild Action
-      uses: sersoft-gmbh/xcodebuild-action@v1.1
-      with:
-        project: MiniToolEngine.xcodeproj
-        scheme: MiniToolEngine
-        destination: platform=macOS
-        action: test
+      - uses: actions/checkout@v2
+      - name: Show the currently detailed version of Xcode
+        run: xcode-select -p
+      - name: build and test
+        run: xcodebuild test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -configuration Debug -project MiniToolEngine.xcodeproj -scheme MiniToolEngineTests
