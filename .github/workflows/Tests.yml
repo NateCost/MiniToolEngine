@@ -10,8 +10,10 @@ jobs:
   build:
 
     runs-on: macos-latest
-
+    
     steps:
-    - uses: actions/checkout@v2
-    - name: Run tests
-      run: swift test -v
+      - uses: actions/checkout@v2
+      - name: Show the currently detailed version of Xcode
+        run: xcode-select -p
+      - name: build and test
+        run: xcodebuild test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -configuration Debug -project MiniToolEngine.xcodeproj -scheme MiniToolEngineTests
